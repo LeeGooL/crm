@@ -1,25 +1,12 @@
 import Store from "./core/Store.js";
-import Observable from "./core/Observable.js";
-import EventEmitter from "./core/EventEmitter.js";
+import OrdersTable from "./core/OrdersTable.js";
 
 const store = new Store();
+store.download();
 
-store.reinit();
+const ot = new OrdersTable(
+	document.querySelector('[data-mount="ordersTable"]'),
+	store.orders.slice(0, 5)
+);
 
-// const ob = new Observable();
-
-// ob.subscribe((a) => console.log('subscribe fired 1', a));
-// ob.subscribe((a) => console.log('subscribe fired 2', a));
-
-// ob.dispatch(5);
-
-const ee = new EventEmitter();
-
-ee.addEventListener("event1", (data) => {
-  console.log("event1", data);
-  ee.emit("event2", { name: "Aleksey" });
-});
-
-ee.addEventListener("event2", (data) => console.log("event2", data));
-
-ee.emit("event1", { name: "Egor" });
+ot.on("edit", (orderId) => console.log({ orderId }));

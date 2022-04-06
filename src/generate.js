@@ -21,17 +21,18 @@ function getRandomDate(from, to) {
   return new Date(result);
 }
 
-const createUser = {
+const createUser = () => ({
   name: names[getRandom(0, names.length)],
   surname: surnames[getRandom(0, surnames.length)],
-};
+});
 
 const now = new Date();
 const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-const ordersInfo = new Array(30).fill().map((elem) => {
+const ordersInfo = new Array(30).fill().map((elem, index) => {
   elem = {
-    user: createUser,
+    id: index + 1,
+    user: createUser(),
     good: goods[getRandom(0, goods.length)],
     status: statuses[getRandom(0, statuses.length)],
     time: getRandomDate(weekAgo, now),
